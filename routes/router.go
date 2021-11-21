@@ -19,6 +19,6 @@ func InitRouter() {
 		auth.DELETE("users/:id", v1.DeleteUser)
 	}
 
-	_ = r.Run("8000")
+	_ = r.Run(":8000")
 
 }

@@ -8,24 +8,47 @@ import (
 	"strconv"
 )
 
-
 // CreateUser 添加用户
 func CreateUser(c *gin.Context) {
+	c.JSON(
+		http.StatusOK, gin.H{
+			"status":  500,
+			"message": "not yet",
+		},
+	)
 	return
 }
 
 // GetUser 查询单个用户
 func GetUser(c *gin.Context) {
+	c.JSON(
+		http.StatusOK, gin.H{
+			"status":  500,
+			"message": "not yet",
+		},
+	)
 	return
 }
 
 // ListUsers 查询用户列表
 func ListUsers(c *gin.Context) {
+	c.JSON(
+		http.StatusOK, gin.H{
+			"status":  500,
+			"message": "not yet",
+		},
+	)
 	return
 }
 
 // UpdateUser 编辑用户
 func UpdateUser(c *gin.Context) {
+	c.JSON(
+		http.StatusOK, gin.H{
+			"status":  500,
+			"message": "not yet",
+		},
+	)
 	return
 }
 

@@ -4,15 +4,28 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"personal-website/database/model"
+	"personal-website/database/ro"
 	"personal-website/utils/errmsg"
+	"personal-website/utils/validator"
 	"strconv"
 )
 
 // CreateUser 添加用户
 func CreateUser(c *gin.Context) {
+	var data ro.CreateUserBody
+	_ = c.ShouldBindJSON(&data)
+
+	statusCode, msg := validator.Validate(&data)
+	if statusCode != http.StatusOK {
+		c.JSON(
+			statusCode, gin.H{
+				"message": msg,
+			},
+		)
+		return
+	}
 	c.JSON(
 		http.StatusOK, gin.H{
-			"status":  500,
 			"message": "not yet",
 		},
 	)

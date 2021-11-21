@@ -1,14 +1,11 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"personal-website/database/model"
+	"personal-website/routes"
 )
 
 func main() {
-	r := gin.Default()
-
 	model.InitDb()
-	//默认为监听8080端口
-	r.Run(":8000")
+	routes.InitRouter()
 }

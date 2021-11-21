@@ -12,7 +12,6 @@ import (
 )
 
 var db *gorm.DB
-var err error
 
 func InitDb() {
 	dns := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
@@ -22,7 +21,7 @@ func InitDb() {
 		utils.DbPort,
 		utils.DbName,
 	)
-	db, err = gorm.Open(mysql.Open(dns), &gorm.Config{
+	db, err := gorm.Open(mysql.Open(dns), &gorm.Config{
 		// gorm日志模式：silent
 		Logger: logger.Default.LogMode(logger.Silent),
 		// 外键约束

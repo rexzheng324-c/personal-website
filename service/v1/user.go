@@ -2,6 +2,7 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 	"net/http"
 	"personal-website/database/model"
 	"personal-website/database/ro"
@@ -15,20 +16,23 @@ func CreateUser(c *gin.Context) {
 	var data ro.CreateUserBody
 	_ = c.ShouldBindJSON(&data)
 
-	statusCode, msg := validator.Validate(&data)
-	if statusCode != http.StatusOK {
-		c.JSON(
-			statusCode, gin.H{
-				"message": msg,
-			},
-		)
+	err := validator.Validate(&data)
+	if err != nil {
+		c.JSON(err.StatusCode, err)
 		return
 	}
-	c.JSON(
-		http.StatusOK, gin.H{
-			"message": "not yet",
-		},
-	)
+	err = model.CreateUser(&model.User{
+		Model:    gorm.Model{ID: 1},
+		Username: data.Username,
+		Password: data.Password,
+		Role:     2,
+	})
+	if err != nil {
+		c.JSON(err.StatusCode, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{})
 	return
 }
 

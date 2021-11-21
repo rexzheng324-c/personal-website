@@ -11,7 +11,7 @@ import (
 	"reflect"
 )
 
-func Validate(data interface{}) (statusCode int, errMessage string) {
+func Validate(data interface{}) *errmsg.ApiError {
 	validate := validator.New()
 	uni := unTrans.New(zh_Hans_CN.New())
 	trans, _ := uni.GetTranslator("zh_Hans_CN")
@@ -29,8 +29,12 @@ func Validate(data interface{}) (statusCode int, errMessage string) {
 	err = validate.Struct(data)
 	if err != nil {
 		for _, v := range err.(validator.ValidationErrors) {
-			return http.StatusBadRequest, v.Translate(trans)
+			return &errmsg.ApiError{
+				StatusCode: http.StatusBadRequest,
+				Code:       errmsg.InvalidParamsValue,
+				Message:    v.Translate(trans),
+			}
 		}
 	}
-	return errmsg.Success, ""
+	return nil
 }

@@ -5,6 +5,13 @@ const (
 	Error   = 500
 
 	// code = 1000... user model error
+	AccessDenied       = "AccessDenied"
+	Forbidden          = "Forbidden"
+	InvalidParamsValue = "InvalidParamsValue"
+	ResourceNotExist   = "ResourceNotExist"
+	SystemError        = "InternalServerError"
+	Unauthorized       = "Unauthorized"
+
 	ErrorUsernameUsed   = 1001
 	ErrorPasswordWrong  = 1002
 	ErrorUserNotExist   = 1003

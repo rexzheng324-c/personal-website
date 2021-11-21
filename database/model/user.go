@@ -4,6 +4,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 	"log"
+	"net/http"
 	"personal-website/utils/errmsg"
 )
 
@@ -38,13 +39,17 @@ func CheckUpUser(id int, name string) (code int) {
 }
 
 // CreateUser 新增用户
-func CreateUser(data *User) int {
+func CreateUser(data *User) *errmsg.ApiError {
 	//data.Password = ScryptPw(data.Password)
 	err := db.Create(&data).Error
 	if err != nil {
-		return errmsg.Error // 500
+		return &errmsg.ApiError{
+			StatusCode: http.StatusInternalServerError,
+			Code:       errmsg.SystemError,
+			Message:    err.Error(),
+		} // 500
 	}
-	return errmsg.Success
+	return nil
 }
 
 // GetUser 查询用户
@@ -74,9 +79,6 @@ func GetUsers(username string, pageSize int, pageNum int) ([]User, int64) {
 	db.Select("id,username,role,created_at").Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&users)
 	db.Model(&users).Count(&total)
 
-	if err != nil {
-		return users, 0
-	}
 	return users, total
 }
 
@@ -86,7 +88,7 @@ func EditUser(id int, data *User) int {
 	var maps = make(map[string]interface{})
 	maps["username"] = data.Username
 	maps["role"] = data.Role
-	err = db.Model(&user).Where("id = ? ", id).Updates(maps).Error
+	err := db.Model(&user).Where("id = ? ", id).Updates(maps).Error
 	if err != nil {
 		return errmsg.Error
 	}
@@ -99,7 +101,7 @@ func ChangePassword(id int, data *User) int {
 	//var maps = make(map[string]interface{})
 	//maps["password"] = data.Password
 
-	err = db.Select("password").Where("id = ?", id).Updates(&data).Error
+	err := db.Select("password").Where("id = ?", id).Updates(&data).Error
 	if err != nil {
 		return errmsg.Error
 	}
@@ -109,7 +111,7 @@ func ChangePassword(id int, data *User) int {
 // DeleteUser 删除用户
 func DeleteUser(id int) int {
 	var user User
-	err = db.Where("id = ? ", id).Delete(&user).Error
+	err := db.Where("id = ? ", id).Delete(&user).Error
 	if err != nil {
 		return errmsg.Error
 	}

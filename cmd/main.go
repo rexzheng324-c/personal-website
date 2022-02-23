@@ -1,11 +1,17 @@
 package main
 
 import (
-	"personal-website/database/model"
+	"github.com/gin-gonic/gin"
 	"personal-website/routes"
 )
 
 func main() {
-	model.InitDb()
-	routes.InitRouter()
+	r := gin.Default()
+
+	routes.SetRouter(r)
+
+	err := r.Run(":8000")
+	if err != nil {
+		panic(err)
+	}
 }

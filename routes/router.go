@@ -5,20 +5,15 @@ import (
 	v1 "personal-website/service/v1"
 )
 
-func InitRouter() {
-	r := gin.New()
-	r.Use(gin.Recovery())
-
-	auth := r.Group("api/v1")
+func SetRouter(r *gin.Engine) {
+	V1Api := r.Group("api/v1")
 	{
-		// user api
-		auth.GET("users/:id", v1.GetUser)
-		auth.GET("users", v1.ListUsers)
-		auth.POST("users", v1.CreateUser)
-		auth.PUT("users/:id", v1.UpdateUser)
-		auth.DELETE("users/:id", v1.DeleteUser)
+		// health check
+		V1Api.GET("health/check")
+		// user api by auth
+		V1Api.GET("users/:id", v1.GetUser)
+		V1Api.GET("users", v1.ListUsers)
+		V1Api.POST("users", v1.CreateUser)
+		V1Api.PUT("users/:id", v1.UpdateUser)
 	}
-
-	_ = r.Run(":8000")
-
 }

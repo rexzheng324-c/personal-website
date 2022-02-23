@@ -11,9 +11,7 @@ import (
 	"time"
 )
 
-var db *gorm.DB
-
-func InitDb() {
+func GetDb() *gorm.DB {
 	dns := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		utils.DbUser,
 		utils.DbPassWord,
@@ -48,5 +46,7 @@ func InitDb() {
 
 	// SetConnMaxLifetiment 设置连接的最大可复用时间。
 	sqlDB.SetConnMaxLifetime(10 * time.Second)
+
+	return db
 
 }

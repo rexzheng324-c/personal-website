@@ -5,7 +5,7 @@ type CreateUserBody struct {
 	// Required: true
 	// Example: rex
 	Username string `json:"username" validate:"required,min=4,max=12" label:"用户名"`
-	// username
+	// password
 	// Required: true
 	// Example: 123456
 	Password string `json:"password" validate:"required,min=6,max=120" label:"密码"`

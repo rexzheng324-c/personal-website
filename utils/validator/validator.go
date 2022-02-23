@@ -6,12 +6,12 @@ import (
 	unTrans "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
 	zhTrans "github.com/go-playground/validator/v10/translations/zh"
-	"net/http"
-	"personal-website/utils/errmsg"
+	"personal-website/service/result"
+	"personal-website/utils/error-msg"
 	"reflect"
 )
 
-func Validate(data interface{}) *errmsg.ApiError {
+func Validate(data interface{}) *error_msg.ApiError {
 	validate := validator.New()
 	uni := unTrans.New(zh_Hans_CN.New())
 	trans, _ := uni.GetTranslator("zh_Hans_CN")
@@ -29,11 +29,7 @@ func Validate(data interface{}) *errmsg.ApiError {
 	err = validate.Struct(data)
 	if err != nil {
 		for _, v := range err.(validator.ValidationErrors) {
-			return &errmsg.ApiError{
-				StatusCode: http.StatusBadRequest,
-				Code:       errmsg.InvalidParamsValue,
-				Message:    v.Translate(trans),
-			}
+			return error_msg.NewApiError(result.Fail, v.Translate(trans))
 		}
 	}
 	return nil

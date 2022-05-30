@@ -1,17 +1,16 @@
 package validator
 
 import (
+	"errors"
 	"fmt"
 	"github.com/go-playground/locales/zh_Hans_CN"
 	unTrans "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
 	zhTrans "github.com/go-playground/validator/v10/translations/zh"
-	"personal-website/service/result"
-	"personal-website/utils/error-msg"
 	"reflect"
 )
 
-func Validate(data interface{}) *error_msg.ApiError {
+func Validate(data interface{}) error {
 	validate := validator.New()
 	uni := unTrans.New(zh_Hans_CN.New())
 	trans, _ := uni.GetTranslator("zh_Hans_CN")
@@ -29,7 +28,7 @@ func Validate(data interface{}) *error_msg.ApiError {
 	err = validate.Struct(data)
 	if err != nil {
 		for _, v := range err.(validator.ValidationErrors) {
-			return error_msg.NewApiError(result.Fail, v.Translate(trans))
+			return errors.New(v.Translate(trans))
 		}
 	}
 	return nil

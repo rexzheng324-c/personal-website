@@ -89,11 +89,6 @@ func LoginUser(c *gin.Context) {
 
 func LogoutUser(c *gin.Context) {
 	session := sessions.Default(c)
-	userId := session.Get(middleware.UserKey)
-	if userId == nil {
-		c.JSON(http.StatusOK, result.NewFailBox(result.RecordNotFound, errors.New("session does not exist")))
-		return
-	}
 	session.Delete(middleware.UserKey)
 	if err := session.Save(); err != nil {
 		c.JSON(http.StatusOK, result.NewFailBox(result.Fail, errors.New("failed to save session")))

@@ -2,8 +2,8 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"personal-website/app/middleware"
-	"personal-website/app/service/v1"
+	"personal-website/app/middlewares"
+	"personal-website/app/services/v1"
 )
 
 func SetRouter(r *gin.Engine) {
@@ -16,7 +16,7 @@ func SetRouter(r *gin.Engine) {
 	}
 
 	V1ApiAuth := r.Group("api/v1")
-	V1ApiAuth.Use(middleware.AuthRequired)
+	V1ApiAuth.Use(middlewares.AuthRequired)
 	{
 		// logout a user
 		V1ApiAuth.GET("users/logout", v1.LogoutUser)

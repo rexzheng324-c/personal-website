@@ -1,8 +1,11 @@
 package mapper
 
+//go:generate mockgen -source=auth.go -destination=./mocks/mock_auth.go -package=mocks
+
+
 import (
-	"personal-website/app/database/mysql"
-	"personal-website/app/model/do"
+	"personal-website/app/databases/mysql"
+	"personal-website/app/models/do"
 )
 
 func RegisterUser(user *do.User, basicAuth *do.BasicAuth) error {

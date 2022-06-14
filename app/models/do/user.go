@@ -1,7 +1,7 @@
 package do
 
 import (
-	"personal-website/app/database/mysql"
+	"personal-website/app/databases/mysql"
 )
 
 type User struct {

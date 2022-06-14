@@ -1,4 +1,4 @@
-package middleware
+package middlewares
 
 import (
 	"github.com/gin-contrib/sessions"
@@ -8,7 +8,7 @@ import (
 
 var UserKey = "user"
 
-// AuthRequired is a simple middleware to check the session
+// AuthRequired is a simple middlewares to check the session
 func AuthRequired(c *gin.Context) {
 	session := sessions.Default(c)
 	user := session.Get(UserKey)

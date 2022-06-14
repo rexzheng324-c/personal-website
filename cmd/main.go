@@ -4,14 +4,14 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
-	"personal-website/app/database/mysql"
+	"personal-website/app/databases/mysql"
 	"personal-website/app/routes"
 )
 
 func main() {
 	r := gin.Default()
 
-	// store session in redis
+	// store session
 	r.Use(sessions.Sessions("SESSIONID", cookie.NewStore([]byte("secret"))))
 
 	// set the router
@@ -22,6 +22,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
 	err = r.Run(":8000")
 	if err != nil {
 		panic(err)

@@ -7,10 +7,10 @@ import (
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"net/http"
-	"personal-website/app/middleware"
-	"personal-website/app/model/do"
-	"personal-website/app/model/mapper"
-	"personal-website/app/model/ro"
+	"personal-website/app/middlewares"
+	"personal-website/app/models/do"
+	"personal-website/app/models/mapper"
+	"personal-website/app/models/ro"
 	"personal-website/app/utils/result"
 	"personal-website/app/utils/validator"
 )
@@ -51,8 +51,8 @@ func RegisterUser(c *gin.Context) {
 
 	session := sessions.Default(c)
 	// Save the username in the session
-	session.Set(middleware.UserKey, userID) // In real world usage you'd set this to the users ID
-	if err := session.Save(); err != nil {
+	session.Set(middlewares.UserKey, userID)
+	if err = session.Save(); err != nil {
 		c.JSON(http.StatusOK, result.NewFailBox(result.Fail, errors.New("failed to save session")))
 		return
 	}
@@ -79,8 +79,8 @@ func LoginUser(c *gin.Context) {
 		return
 	}
 	session := sessions.Default(c)
-	session.Set(middleware.UserKey, basicAuth.UserId) // In real world usage you'd set this to the users ID
-	if err := session.Save(); err != nil {
+	session.Set(middlewares.UserKey, basicAuth.UserId)
+	if err = session.Save(); err != nil {
 		c.JSON(http.StatusOK, result.NewFailBox(result.Fail, errors.New("failed to save session")))
 		return
 	}
@@ -89,7 +89,7 @@ func LoginUser(c *gin.Context) {
 
 func LogoutUser(c *gin.Context) {
 	session := sessions.Default(c)
-	session.Delete(middleware.UserKey)
+	session.Delete(middlewares.UserKey)
 	if err := session.Save(); err != nil {
 		c.JSON(http.StatusOK, result.NewFailBox(result.Fail, errors.New("failed to save session")))
 		return

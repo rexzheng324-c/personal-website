@@ -9,3 +9,8 @@ type BasicModel struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
+
+type PageCondition struct {
+	Limit  int
+	Offset int
+}

@@ -28,7 +28,7 @@ func RegisterUser(c *gin.Context) {
 	user := do.User{
 		BasicModel: do.BasicModel{ID: userID},
 		NickName:   userID,
-		Role:       2,
+		Role:       do.UserRoleNormal,
 	}
 	basicAuth := do.BasicAuth{
 		BasicModel: do.BasicModel{

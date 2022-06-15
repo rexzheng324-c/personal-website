@@ -7,17 +7,18 @@ import (
 )
 
 var UserKey = "user"
+var UserIdKey = "userId"
 
 // AuthRequired is a simple middlewares to check the session
 func AuthRequired(c *gin.Context) {
 	session := sessions.Default(c)
-	user := session.Get(UserKey)
-	if user == nil {
+	userId := session.Get(UserKey)
+	if userId == nil {
 		// Abort the request with the appropriate error code
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
 		return
 	}
-	c.Set("userId", user)
+	c.Set(UserIdKey, userId)
 	// Continue down the chain to handler etc
 	c.Next()
 }

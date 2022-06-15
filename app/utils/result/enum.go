@@ -11,6 +11,7 @@ const (
 	UserNameExist    = "user-10001"
 	UserNameNotExist = "user-10002"
 	WrongPassword    = "user-10003"
+	NotAdmin         = "user-10004"
 )
 
 var codeMsg = map[string]string{

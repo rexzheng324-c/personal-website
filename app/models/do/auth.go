@@ -1,7 +1,5 @@
 package do
 
-//go:generate mockgen -source=auth.go -destination=./mocks/mock_auth.go -package=mocks
-
 import "personal-website/app/databases/mysql"
 
 type BasicAuth struct {
